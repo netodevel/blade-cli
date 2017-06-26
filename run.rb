@@ -11,8 +11,9 @@ class Run
                 end
             end
         end
-
-        command = "java -Dfile.encoding=UTF-8 -classpath /home/neto/Documentos/open-sources/target/classes#{dependencies} sample.blade.Application"
+        path_build = Dir.pwd + "/target/classes"
+        command = "java -Dfile.encoding=UTF-8 -classpath #{path_build}#{dependencies} com.example.myapp.Application"
+        puts command
         system(command)
     end
     
