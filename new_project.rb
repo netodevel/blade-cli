@@ -1,13 +1,24 @@
+require_relative 'string'
+
 class NewProject
     def init(name_project, package)
-        command = "mvn archetype:generate -DgroupId=#{package} -DartifactId=#{name_project} -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false"
-        puts command
+        command = "mvn archetype:generate -DgroupId=#{package} -DartifactId=#{name_project} -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false | grep dontprintmvn | awk '{print $1}'"
         if directory_exists?(name_project)
-            puts "error: already existing project"
+            puts "error: already existing project".red
         else
+            print "Generating project...\n".blue
             system(command)
+            directory_project = Dir.pwd + "/#{name_project}"
+            print "info: project created "
+            print "#{directory_project}\n".blue
             generate_main(name_project, package)
+            print "info: generate main "
+            print "#{package}.Application.java\n".blue
             generate_pom(name_project, package)
+            print "info: generate "
+            print "pom.xml\n".blue
+            print "info: "
+            print "done\n".green
         end
     end
 
@@ -32,8 +43,3 @@ end
 
 new_project = NewProject.new
 new_project.init("my-project-2", "com.example.myapp")
-
-
-
-
-
