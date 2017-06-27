@@ -1,4 +1,6 @@
 require_relative 'main'
+require_relative 'new_project'
+require_relative 'run'
 
 class String
   def black;          "\e[30m#{self}\e[0m" end
@@ -30,7 +32,14 @@ task :default => :blade
 
 desc 'Create a new project Blade'
 task :new do
-  puts "command new project"
+  new_project = NewProject.new
+  new_project.init("my-project-2", "com.example.myapp")
+end
+
+desc 'Run project'
+task :run do
+  run = Run.new
+  run.init
 end
 
 desc 'Scaffold'
@@ -43,7 +52,7 @@ task :init do
   print  "Configurating...\n\n"
   chid_path = Dir.pwd
   username = %x[echo $(logname)]
-  path = "/Users/#{username.strip}/"
+  path = "/home/neto/"
 
   print "Appending the cli alias on your "
   print ".zshrc\n\n".blue
@@ -51,7 +60,7 @@ task :init do
   print "path: #{path}"
 
   #~/.zshrc
-  File.open(File.join(path, '.zshrc'), 'a') do |f|
+  File.open(File.join(path, '.bashrc'), 'a') do |f|
     f.write "\nalias blade='rake -f #{chid_path}/Rakefile'"
   end
 
@@ -101,17 +110,20 @@ task :blade do
 
     if (action == :new)
       Rake::Task['new'].execute
-      puts "\nDone! Something else?"
+    end
+
+    if (action == :run)
+      Rake::Task['run'].execute
     end
 
     if (action == :scaffold)
       Rake::Task['scaffold'].execute
-      puts "\nDone! Something else?"
     end
 
     if (action == :help)
       puts "I can help you with:"
       puts "  - new        -> Create a new project Blade"
+      puts "  - run        -> Run project Blade"
       puts "  - scaffold    -> Generate CRUD Rest"
       puts "\nTell me what you need"
     end

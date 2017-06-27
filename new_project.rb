@@ -41,5 +41,3 @@ class NewProject
     end
 end
 
-new_project = NewProject.new
-new_project.init("my-project-2", "com.example.myapp")

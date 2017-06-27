@@ -3,6 +3,7 @@ class Main
   REGEX_ACTIONS  = {
     help: [/help/, /:h/],
     new: [/new/],
+    run: [/run/],
     scaffold: [/scaffold/]
   }
 
