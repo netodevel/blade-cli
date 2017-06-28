@@ -1,16 +1,16 @@
 require_relative 'string'
 
 class Run
-    def init
+    def init(main_class)
       print "Booting NettyServer \n".blue
       print "Blade 2.0.0 application starting in development on "
       print "http://localhost:9000 \n".green
       print "Ctrl-C to shutdown server \n".blue
       compile_all_classes()
-      load_dependencies()
+      load_dependencies(main_class)
     end
 
-    def load_dependencies
+    def load_dependencies(main_class)
         dependencies = ""
         File.open('list-dependencies.txt', 'r') do |f1|
             while line = f1.gets
@@ -21,7 +21,7 @@ class Run
             end
         end
         path_build = Dir.pwd + "/target/classes"
-        command = "java -Dfile.encoding=UTF-8 -classpath #{path_build}#{dependencies} com.example.myapp.Application"
+        command = "java -Dfile.encoding=UTF-8 -classpath #{path_build}#{dependencies} #{main_class}"
         system(command)
     end
 
