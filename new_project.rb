@@ -23,14 +23,14 @@ class NewProject
     end
 
     def generate_main(name_project, package)
-        text = File.read("/home/neto/Documentos/blade-cli/template_main.txt")
+        text = File.read("/Users/josevieira/Documents/github/blade-cli/template_main.txt")
         new_contents = text.gsub("${package}", package)
         package_path = package.gsub(".", "/")
             File.open("#{name_project}/src/main/java/#{package_path}/Application.java", "w") {|file| file.puts new_contents }
     end
 
     def generate_pom(name_project, package)
-        text = File.read("/home/neto/Documentos/blade-cli/template_pom.txt")
+        text = File.read("/Users/josevieira/Documents/github/blade-cli/template_pom.txt")
         new_contents = text.gsub("${package}", package)
         new_contents = new_contents.gsub("${name_project}", name_project)
         File.open("#{name_project}/pom.xml", "w") {|file| file.puts new_contents }
@@ -40,4 +40,3 @@ class NewProject
         File.directory?(directory)
     end
 end
-
