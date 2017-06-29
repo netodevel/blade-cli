@@ -1,12 +1,14 @@
 require_relative 'string'
 
 class Run
-    def init(main_class)
+    def init()
       print "Booting NettyServer \n".blue
       print "Blade 2.0.0 application starting in development on "
       print "http://localhost:9000 \n".green
       print "Ctrl-C to shutdown server \n".blue
-      compile_all_classes()
+      main_class = main_config_blade()
+      package_root = package_config_blade()
+      compile_all_classes(package_root)
       load_dependencies(main_class)
     end
 
@@ -25,9 +27,41 @@ class Run
         system(command)
     end
 
-    def compile_all_classes
-        system("mkdir target | grep dontprintmvn | awk '{print $1}'")
-        system("mkdir target/classes | grep dontprintmvn | awk '{print $1}'")
+    def main_config_blade
+        main_class = ""
+        File.open('blade.conf', 'r') do |f1|
+            while line = f1.gets
+                boot_class = line.split('boot-class:')
+                unless (boot_class[1].to_s.empty?)
+                   main_class = boot_class[1].strip
+                end
+            end
+        end
+        return main_class
+    end
+
+    def package_config_blade
+        package_root = ""
+        File.open('blade.conf', 'r') do |f1|
+            while line = f1.gets
+                package = line.split('package:')
+                unless (package[1].to_s.empty?)
+                   package_root = package[1].strip
+                end
+            end
+        end
+        return package_root
+    end
+
+    def folder_target_exists?
+        File.exist?("target")
+    end
+
+    def compile_all_classes(package_root)
+        unless folder_target_exists?
+            system("mkdir target | grep dontprintmvn | awk '{print $1}'")
+            system("mkdir target/classes | grep dontprintmvn | awk '{print $1}'")
+        end
         system("mvn dependency:resolve | grep dontprintmvn | awk '{print $1}'")
         system("mvn -o dependency:list -DoutputFile='list-dependencies.txt' -DoutputAbsoluteArtifactFilename=true | grep dontprintmvn | awk '{print $1}'")
         dependencies = ""
@@ -40,7 +74,7 @@ class Run
             end
         end
         path_build = Dir.pwd + "/target/classes"
-        command = "javac -d #{path_build} -cp #{dependencies} src/main/java/com/example/myapp/*.java"
+        command = "javac -d #{path_build} -cp #{dependencies} src/main/java/#{package_root}/*.java"
         system(command)
     end
 

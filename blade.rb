@@ -28,9 +28,9 @@ OptionParser.new do |opts|
     action = "type"
   end
 
-  opts.on("-s", "--run project") do |main_class|
+  opts.on("-s", "--[no-]verbose", "Run project") do |verbose|
     action = "run"
-    options[:main_class] = main_class
+    options[:verbose] = verbose
   end
 
   opts.on("-p", "--set port server") do |port|
@@ -57,5 +57,5 @@ end
 
 if (action == "run")
     run = Run.new
-    run.init(options[:main_class])
+    run.init
 end
