@@ -1,23 +1,68 @@
-# blade-cli
+# Blade CLI
 Command line to make it easier config, executation and scaffolds to framework [Blade](https://github.com/biezhi/blade).
 
 # Overview
 <p align="center">
-  <img src="etc/install.png" alt="" />
+  <img src="etc/cli.png" alt="" />
 </p>
 
-Repository designed to build a cli for the blade framework
+# Alert
+In development. Help us! Make a fork
 
-# commands to implement
+# Requeriments
+* ruby
+* maven
+* java
 
-### New
-Create a maven project with the dependecy blade and hello world endpoint.
+# Installation
 
-### Run
-Execute project
+To get started follow those steps:
 
-### Scaffold
-Generate crud Rest
+1- Clone the project:
 
-### Migrations
-To generate sql files
+```bash
+git clone https://github.com/NetoDevel/blade-cli.git
+```
+
+2- Install the dependency if you do not have already installed:
+
+```bash
+$ gem install bundler
+$ bundle install
+```
+
+3- Inside the folder project run:
+
+```bash
+$ rake init
+```
+
+# Usage 
+
+Commands that we can already test
+
+Create a new project
+```bash
+blade -n my-project com.example.myproject
+```
+
+Inside the folder project run:
+
+```bash
+blade -s
+```
+
+other commands in development...
+
+
+## Acknowledgment
+         
+ * [Rachid](https://github.com/rachidcalazans)
+ * [Thiago](https://github.com/kidush)
+
+
+
+
+
+
+
