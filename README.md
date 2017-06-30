@@ -52,6 +52,10 @@ Inside the folder project run:
 blade -s
 ```
 
+```bash
+blade -g controller Hello
+```
+
 other commands in development...
 
 

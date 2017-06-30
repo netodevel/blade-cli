@@ -10,6 +10,11 @@ class Run
       package_root = package_config_blade()
       compile_all_classes(package_root)
       load_dependencies(main_class)
+      #run_project(main_class)
+    end
+
+    def run_project(main_class)
+        system("mvn compile exec:java -Dexec.mainClass=#{main_class}")
     end
 
     def load_dependencies(main_class)

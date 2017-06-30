@@ -2,6 +2,7 @@
 require 'optparse'
 require_relative 'new_project'
 require_relative 'run'
+require_relative 'generate'
 
 options = {}
 action = ""
@@ -23,9 +24,9 @@ OptionParser.new do |opts|
     action = "new"
   end
 
-  opts.on("-t", "--type project") do |type|
-    options[:type] = type
-    action = "type"
+  opts.on("-g", "--generate type_generate") do |generate|
+    action = "generate"
+    options[:generate] = generate
   end
 
   opts.on("-s", "--[no-]verbose", "Run project") do |verbose|
@@ -53,6 +54,13 @@ end.parse!
 if (action == "new")
     new_project = NewProject.new
     new_project.init(options[:name_project], ARGV[0])
+end
+
+if (action == "generate")
+  if (options[:generate]) == "controller"
+    generate_controller = Generate.new
+    generate_controller.generate_controller_clean(ARGV[0])
+  end
 end
 
 if (action == "run")
