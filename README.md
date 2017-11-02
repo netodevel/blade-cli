@@ -1,6 +1,8 @@
 # Blade CLI
 Command line to make it easier config, executation and scaffolds to framework [Blade](https://github.com/biezhi/blade).
 
+## [DEPRECIATED]
+
 # Overview
 <p align="center">
   <img src="etc/cli.png" alt="" />
